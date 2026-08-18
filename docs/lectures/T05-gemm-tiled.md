@@ -68,6 +68,29 @@ __global__ void gemmTiled(const float *A, const float *B, float *C, int M, int N
 }
 ```
 
+> **为什么 `row` 用 `blockIdx.y/ty`，`col` 用 `blockIdx.x/tx`？**
+>
+> 因为矩阵里的“行”是竖直方向（y），“列”是水平方向（x）。
+> CUDA 的 `threadIdx.y` 表示线程在 block 内的“行号”，`threadIdx.x` 表示“列号”；
+> `blockIdx.y` 表示 block 在 grid 中的“行块”，`blockIdx.x` 表示“列块”。
+>
+> 所以：
+> - `row = blockIdx.y * BS + ty`：先取第几个行块，再取块内第几行；
+> - `col = blockIdx.x * BS + tx`：先取第几个列块，再取块内第几列。
+>
+> 共享内存 `As[ty][tx]` 的第一个下标是 tile 内行号（row），第二个下标是 tile 内列号（col），
+> 也就是 `[row][col]`，不是 `[x][y]`。
+> 如果你看到有人写 `As[tx][ty]`，那其实是把第一个下标当列、第二个当行，等价于转置存储；
+> 在行主序矩阵里，标准写法就是 `As[ty][tx]`。
+>
+> **根本原因（为什么必须这样映射）**：
+> - CUDA 中 `threadIdx.x` 是变化最快的维度，`threadIdx.y` 变化慢；
+> - C 语言行主序矩阵里，同一行的列是连续存储的；
+> - 为了让变化最快的线程访问连续内存，必须让 `x` 对应列；
+> - 这样同一个 warp 的相邻线程访问相邻地址，形成合并访问（coalesced access），是 CUDA 高性能的关键。
+>
+> 所以 `row` 用 `y`、`col` 用 `x` 不是随便定的，而是为了合并访问。
+
 - `__shared__`：这块数组放在 SM 的 shared memory，block 内所有线程可见。
 - 外层 `bk` 循环：把 K 切成一段段 `BS`，每段先从 global 搬进 shared，再在 shared 上算。
 - **两次 `__syncthreads()` 是 tiling 的灵魂**：第一次保证“都搬完再读”；第二次保证

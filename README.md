@@ -2,13 +2,13 @@
 
 > 一个面向初学者的 **GPU 性能与 AI Infra 学习项目**：从 CUDA 算子、性能工具，到推理框架、训练框架和并行架构，通过 29 个最小增量 Ticket 逐步掌握。
 
-> 📝 本项目是我基于本地设备（RTX 4070 Laptop / WSL2）**边实现边学习**的学习笔记与实践记录；方案已按 **29 个增量 Ticket** 划分，你可以根据自己的需求和设备配置**修改、增删、调整顺序**，不必完全照搬。
+> 📝 本项目是我基于本地设备（RTX 4070 Laptop / WSL2）**边实现边学习**的学习实践记录；方案已按 **29 个增量 Ticket** 划分，你可以根据自己的需求和设备配置**修改、增删、调整顺序**，不必完全照搬。
 
 <p align="center">
-  <a href="https://github.com/yanght24/GPU-Perf-Playground/stargazers">
+  <a href="https://github.com/yanght27/GPU-Perf-Playground/stargazers">
     <img src="https://img.shields.io/github/stars/yanght27/GPU-Perf-Playground?style=social" alt="GitHub stars">
   </a>
-  <a href="https://github.com/yanght24/GPU-Perf-Playground">
+  <a href="https://github.com/yanght27/GPU-Perf-Playground">
     <img src="https://img.shields.io/badge/Tickets-T00--T28-brightgreen" alt="Tickets">
   </a>
   <img src="https://img.shields.io/badge/License-Apache--2.0-brightgreen" alt="License">
