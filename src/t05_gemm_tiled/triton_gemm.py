@@ -29,7 +29,7 @@ def gemm_tiled_kernel(a_ptr, b_ptr, c_ptr, M, N, K,
     offs_n_load = (pid_n * BLOCK_N + tl.arange(0, BLOCK_N)) % N
     offs_m_store = pid_m * BLOCK_M + tl.arange(0, BLOCK_M)
     offs_n_store = pid_n * BLOCK_N + tl.arange(0, BLOCK_N)
-    offs_k = tl.arange(0, BLOCK_K)
+    offs_k = tl.arange(0, BLOCK_K)      # K维度的偏移
 
     a_ptrs = a_ptr + offs_m_load[:, None] * K + offs_k[None, :]
     b_ptrs = b_ptr + offs_k[:, None] * N + offs_n_load[None, :]
