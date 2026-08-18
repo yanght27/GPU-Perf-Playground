@@ -1,0 +1,216 @@
+{
+  "schema_version": "gpp-day0-lock-v1",
+  "created_at": "2026-08-15T14:10:00Z",
+  "hardware_requirements": {
+    "gpu_name": "NVIDIA GeForce RTX 4070 Laptop GPU",
+    "compute_capability": "8.9",
+    "minimum_memory_mib": 8187,
+    "driver_version": "581.94",
+    "system_cuda": "13.0"
+  },
+  "container_host": {
+    "docker_engine": "29.1.3",
+    "nvidia_container_toolkit": "1.20.0"
+  },
+  "containers": [
+    {
+      "name": "vllm",
+      "image": "vllm/vllm-openai:v0.27.1"
+    },
+    {
+      "name": "sglang",
+      "image": "lmsysorg/sglang:v0.5.17"
+    },
+    {
+      "name": "tensorrt-llm",
+      "image": "nvcr.io/nvidia/tensorrt-llm/release:1.2.1"
+    },
+    {
+      "name": "cuda-base",
+      "image": "nvidia/cuda:13.0.2-base-ubuntu22.04"
+    }
+  ],
+  "environments": [
+    {
+      "name": "gpp-core",
+      "python": "3.12",
+      "packages": {
+        "torch": "2.13.0+cu130",
+        "triton": "3.7.1",
+        "transformers": "5.14.1",
+        "modelscope-hub": "0.1.8",
+        "numpy": "2.5.2"
+      },
+      "note": "算子开发主环境；transformers 5.14.1 由本环境实际安装版本锁定（官方 PyPI 最新 5.15.0 与 ms-swift v4.4.3 的 <5.15 约束兼容，但未经学习者同意不升级）。"
+    },
+    {
+      "name": "gpp-cute",
+      "python": "3.12",
+      "packages": {
+        "torch": "2.13.0+cu130",
+        "cuda-python": "13.3.1",
+        "nvidia-cutlass-dsl": "4.7.0",
+        "numpy": "2.5.2"
+      },
+      "resolved_packages": {
+        "nvidia-cuda-nvdisasm": "13.3.73",
+        "protobuf": "6.33.6"
+      },
+      "cutlass": {
+        "repository": "https://github.com/NVIDIA/cutlass.git",
+        "commit": "564d267e4c992c456d12ad02665f9acedf7708f1"
+      }
+    },
+    {
+      "name": "gpp-cutile",
+      "python": "3.12",
+      "packages": {
+        "cuda-tile": "1.5.0",
+        "cupy-cuda13x": "14.1.1",
+        "numpy": "2.5.2"
+      },
+      "resolved_tileir_packages": {
+        "cuda-toolkit": "13.0.3.0",
+        "nvidia-cuda-crt": "13.3.73",
+        "nvidia-cuda-nvcc": "13.3.73",
+        "nvidia-cuda-runtime": "13.0.96",
+        "nvidia-cuda-tileiras": "13.3.36",
+        "nvidia-nvjitlink": "13.3.33",
+        "nvidia-nvvm": "13.3.73"
+      }
+    },
+    {
+      "name": "gpp-deepspeed-0.19.5",
+      "python": "3.12",
+      "packages": {
+        "torch": "2.13.0+cu130",
+        "triton": "3.7.1",
+        "deepspeed": "0.19.5"
+      }
+    },
+    {
+      "name": "gpp-swift-4.4.3",
+      "python": "3.12",
+      "packages": {
+        "torch": "2.11.0+cu130",
+        "transformers": "5.12.1",
+        "triton": "3.6.0",
+        "deepspeed": "0.18.9",
+        "vllm": "0.23.0",
+        "ms-swift": "4.5.0.dev0"
+      },
+      "ms_swift": {
+        "repository": "https://github.com/modelscope/ms-swift.git",
+        "commit": "e1287928be4451b9ed5e2fb00a24ad3c8f61287b",
+        "official_tag": "v4.4.3"
+      },
+      "note": "环境名 gpp-swift-4.4.3 对应官方 tag v4.4.3（commit e1287928）；该 tag 内版本文件声明 4.5.0.dev0，命名与安装一致，无需改名。"
+    }
+  ],
+  "assets": [
+    {
+      "kind": "model",
+      "name": "Qwen2.5-0.5B-Instruct",
+      "modelscope_id": "Qwen/Qwen2.5-0.5B-Instruct",
+      "revision": "master",
+      "relative_path": "modelscope/qwen2.5-0.5b-instruct",
+      "revision_record": "modelscope/qwen2.5-0.5b-instruct.revision",
+      "tokenizer_file": "tokenizer_config.json",
+      "chat_template_required_markers": [
+        "add_generation_prompt",
+        "system",
+        "user",
+        "assistant"
+      ],
+      "fail_on_extra_files": true,
+      "files": [
+        {
+          "path": ".gitattributes",
+          "size": 1519,
+          "sha256": "11ad7efa24975ee4b0c3c3a38ed18737f0658a5f75a0a96787b576a78a023361"
+        },
+        {
+          "path": "LICENSE",
+          "size": 11343,
+          "sha256": "832dd9e00a68dd83b3c3fb9f5588dad7dcf337a0db50f7d9483f310cd292e92e"
+        },
+        {
+          "path": "README.md",
+          "size": 4917,
+          "sha256": "b19c806a904db6dc878a0462e70b551f6b7ac78dfbb88c2eb966ca2b9109ae15"
+        },
+        {
+          "path": "config.json",
+          "size": 659,
+          "sha256": "18e18afcaccafade98daf13a54092927904649e1dd4eba8299ab717d5d94ff45"
+        },
+        {
+          "path": "configuration.json",
+          "size": 2,
+          "sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+        },
+        {
+          "path": "generation_config.json",
+          "size": 242,
+          "sha256": "e558847a8b4402616f1273797b015104dc266fe4b520056fca88823ba8f8ebe6"
+        },
+        {
+          "path": "merges.txt",
+          "size": 1671839,
+          "sha256": "599bab54075088774b1733fde865d5bd747cbcc7a547c5bc12610e874e26f5e3"
+        },
+        {
+          "path": "model.safetensors",
+          "size": 988097824,
+          "sha256": "fdf756fa7fcbe7404d5c60e26bff1a0c8b8aa1f72ced49e7dd0210fe288fb7fe"
+        },
+        {
+          "path": "tokenizer.json",
+          "size": 7031645,
+          "sha256": "c0382117ea329cdf097041132f6d735924b697924d6f6fc3945713e96ce87539"
+        },
+        {
+          "path": "tokenizer_config.json",
+          "size": 7305,
+          "sha256": "5b5d4f65d0acd3b2d56a35b56d374a36cbc1c8fa5cf3b3febbbfabf22f359583"
+        },
+        {
+          "path": "vocab.json",
+          "size": 2776833,
+          "sha256": "ca10d7e9fb3ed18575dd1e277a2579c16d108e32f27439684afa0e10b1440910"
+        }
+      ]
+    },
+    {
+      "kind": "dataset",
+      "name": "alpaca-gpt4-data-zh（ms-swift v4.4.3 官方 SFT Quick Start 数据集）",
+      "modelscope_id": "AI-ModelScope/alpaca-gpt4-data-zh",
+      "revision": "master",
+      "relative_path": "modelscope/alpaca-gpt4-data-zh",
+      "revision_record": "modelscope/alpaca-gpt4-data-zh.revision",
+      "fail_on_extra_files": true,
+      "files": [
+        {
+          "path": "README.md",
+          "size": 1230,
+          "sha256": "0c6335e19f70c759cd4db9f274bdd090f585c20140e0a47337c85280de1de3f5"
+        },
+        {
+          "path": "alpaca-gpt4-data-zh.json",
+          "size": 116,
+          "sha256": "a65ff5f15b65fc483a35d412976eda84a38d8392dc68e19cd6c657b61d83ff37"
+        },
+        {
+          "path": "dataset_infos.json",
+          "size": 200,
+          "sha256": "50a1d09493e527a2d7ad5d806c1338efd27714b29f1fda337eba13b9a38706e4"
+        },
+        {
+          "path": "train.csv",
+          "size": 31804437,
+          "sha256": "8383d6dacfd4f03a99b29ecf0e18a21b13fc46e46acf57a7436d1562fb144a0d"
+        }
+      ]
+    }
+  ]
+}
