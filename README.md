@@ -6,7 +6,7 @@
 
 <p align="center">
   <a href="https://github.com/yanght24/GPU-Perf-Playground/stargazers">
-    <img src="https://img.shields.io/github/stars/yanght24/GPU-Perf-Playground?style=social" alt="GitHub stars">
+    <img src="https://img.shields.io/github/stars/yanght27/GPU-Perf-Playground?style=social" alt="GitHub stars">
   </a>
   <a href="https://github.com/yanght24/GPU-Perf-Playground">
     <img src="https://img.shields.io/badge/Tickets-T00--T28-brightgreen" alt="Tickets">
@@ -231,7 +231,7 @@ bash scripts/run_t27_all.sh > docs/evidence/T27/t27-run-all.txt 2>&1
 
 ## Star History
 
-[![Star History Chart](https://api.star-history.com/svg?repos=yanght24/GPU-Perf-Playground&type=Date)](https://star-history.com/#yanght24/GPU-Perf-Playground&Date)
+[![Star History Chart](https://api.star-history.com/svg?repos=yanght27/GPU-Perf-Playground&type=Date)](https://star-history.com/#yanght27/GPU-Perf-Playground&Date)
 
 ---
 
